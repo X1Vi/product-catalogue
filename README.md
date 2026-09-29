@@ -2,31 +2,35 @@
 
 A static, single-page product catalogue with five generated pixel-art covers.
 
-## Deploy on Cloudflare Pages
+## Deploy as a Cloudflare Worker
 
-Connect the GitHub repository `X1Vi/product-catalogue` from **Workers & Pages → Create → Pages → Import an existing Git repository**.
+Create a Worker in **Workers & Pages**, connect the GitHub repository `X1Vi/product-catalogue`, and use Workers Builds with these settings:
 
 Use these settings:
 
 | Setting | Value |
 | --- | --- |
 | Production branch | `main` |
-| Framework preset | `None` |
-| Build command | `exit 0` |
-| Build output directory | `dist` |
+| Build command | Leave blank |
+| Deploy command | `npx wrangler@latest deploy` |
+| Preview command | `npx wrangler@latest preview` |
 | Root directory | Leave blank (repository root) |
-| Environment variables | None |
+| Build variables and secrets | None |
 
-Cloudflare will publish `dist/index.html` and automatically deploy every push to `main`. Pull requests and other branches can receive preview deployments.
+The Worker configuration is in `wrangler.jsonc`. Every request runs through `src/index.js` before the matching file in `dist` is returned, so request counts, successes, errors, and invocation status are recorded as Worker metrics. Workers Logs are enabled at a 100% sampling rate for this low-traffic catalogue.
 
-The `dist/_headers` file adds browser security headers when the site is served by Cloudflare Pages.
+Every push to `main` triggers a production deployment. Other branches can use Worker preview builds.
+
+### View metrics
+
+Open **Workers & Pages → x1vi-product-catalogue**. The Worker overview shows request metrics. Open **Observability** for invocation logs and Query Builder.
 
 ## Local preview
 
 From the repository root:
 
 ```sh
-python3 -m http.server 4173 --directory dist
+npx wrangler@latest dev
 ```
 
-Then open `http://localhost:4173`.
+Wrangler prints the local preview URL.
