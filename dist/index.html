@@ -1,0 +1,376 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#07090c" />
+    <meta name="description" content="A curated shelf of small, useful products built for the open web." />
+    <title>X1VI Product Catalogue</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='5' fill='%2307090c'/%3E%3Cpath fill='%23d7ff45' d='M7 7h8v8H7zm10 0h8v8h-8zM7 17h8v8H7zm10 0h8v8h-8z'/%3E%3C/svg%3E" />
+    <style>
+      :root {
+        --bg: #07090c;
+        --panel: #10141a;
+        --ink: #f2f4ed;
+        --muted: #8f9aa8;
+        --line: #2a3039;
+        --acid: #d7ff45;
+        --sky: #58c8ff;
+      }
+
+      * { box-sizing: border-box; }
+
+      html { scroll-behavior: smooth; }
+
+      body {
+        margin: 0;
+        min-width: 320px;
+        color: var(--ink);
+        background:
+          linear-gradient(rgba(255,255,255,.022) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(255,255,255,.022) 1px, transparent 1px),
+          var(--bg);
+        background-size: 32px 32px;
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        font-size: 16px;
+        line-height: 1.5;
+      }
+
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        background: radial-gradient(circle at 16% -10%, rgba(88, 200, 255, .13), transparent 34%), radial-gradient(circle at 90% 8%, rgba(215, 255, 69, .08), transparent 28%);
+        z-index: -1;
+      }
+
+      a { color: inherit; }
+
+      .shell {
+        width: min(1380px, calc(100% - 40px));
+        margin: 0 auto;
+        padding: 28px 0 64px;
+      }
+
+      header {
+        display: flex;
+        align-items: flex-end;
+        justify-content: space-between;
+        gap: 32px;
+        padding: 32px 0 28px;
+        border-bottom: 1px solid var(--line);
+        margin-bottom: 28px;
+      }
+
+      .eyebrow,
+      .count,
+      .card-kicker,
+      .visit {
+        font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+        text-transform: uppercase;
+        letter-spacing: .13em;
+        font-weight: 700;
+      }
+
+      .eyebrow {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        color: var(--acid);
+        font-size: .78rem;
+        margin: 0 0 13px;
+      }
+
+      .eyebrow::before {
+        content: "";
+        width: 9px;
+        height: 9px;
+        background: var(--acid);
+        box-shadow: 0 0 16px rgba(215, 255, 69, .7);
+      }
+
+      h1 {
+        margin: 0;
+        max-width: 820px;
+        font-size: clamp(2.55rem, 7vw, 6.9rem);
+        line-height: .9;
+        letter-spacing: -.065em;
+        font-weight: 850;
+      }
+
+      h1 span { color: var(--muted); }
+
+      .count {
+        flex: 0 0 auto;
+        display: grid;
+        gap: 4px;
+        justify-items: end;
+        color: var(--muted);
+        font-size: .75rem;
+      }
+
+      .count strong {
+        color: var(--ink);
+        font-family: inherit;
+        font-size: 2.3rem;
+        letter-spacing: -.08em;
+        line-height: 1;
+      }
+
+      main {
+        display: grid;
+        grid-template-columns: repeat(12, minmax(0, 1fr));
+        gap: 18px;
+      }
+
+      .card {
+        --accent: var(--acid);
+        grid-column: span 4;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        min-height: 470px;
+        overflow: hidden;
+        color: var(--ink);
+        text-decoration: none;
+        background: var(--panel);
+        border: 1px solid var(--line);
+        border-radius: 5px;
+        box-shadow: 0 14px 44px rgba(0,0,0,.18);
+        transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
+      }
+
+      .card:nth-child(1), .card:nth-child(2) { grid-column: span 6; }
+
+      .card:hover,
+      .card:focus-visible {
+        transform: translateY(-5px);
+        border-color: var(--accent);
+        box-shadow: 0 22px 58px rgba(0,0,0,.4), 0 0 0 1px var(--accent);
+        outline: none;
+      }
+
+      .cover {
+        position: relative;
+        aspect-ratio: 16 / 10;
+        overflow: hidden;
+        background: #141922;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .cover::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(180deg, transparent 55%, rgba(7,9,12,.58)), repeating-linear-gradient(0deg, rgba(255,255,255,.025) 0 1px, transparent 1px 4px);
+        pointer-events: none;
+      }
+
+      .cover img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        image-rendering: pixelated;
+        transition: transform 420ms cubic-bezier(.2,.75,.25,1), filter 180ms ease;
+      }
+
+      .card:hover .cover img,
+      .card:focus-visible .cover img { transform: scale(1.045); filter: saturate(1.12); }
+
+      .card-number {
+        position: absolute;
+        top: 14px;
+        left: 14px;
+        z-index: 2;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 38px;
+        height: 30px;
+        color: #080a0c;
+        background: var(--accent);
+        border: 2px solid #080a0c;
+        box-shadow: 4px 4px 0 #080a0c;
+        font: 800 .8rem/1 "SFMono-Regular", Consolas, monospace;
+      }
+
+      .content {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        gap: 20px;
+        align-items: end;
+        padding: 22px 22px 24px;
+        flex: 1;
+      }
+
+      .card-kicker {
+        color: var(--accent);
+        font-size: .7rem;
+        margin: 0 0 8px;
+      }
+
+      h2 {
+        margin: 0 0 8px;
+        font-size: clamp(1.55rem, 2.6vw, 2.35rem);
+        line-height: 1;
+        letter-spacing: -.04em;
+      }
+
+      .description {
+        max-width: 49ch;
+        margin: 0;
+        color: var(--muted);
+      }
+
+      .visit {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 42px;
+        height: 42px;
+        border: 1px solid var(--line);
+        color: var(--accent);
+        font-size: 1.05rem;
+        transition: color 180ms ease, background 180ms ease, border-color 180ms ease;
+      }
+
+      .card:hover .visit,
+      .card:focus-visible .visit { color: #080a0c; background: var(--accent); border-color: var(--accent); }
+
+      .skyforge { --accent: #58c8ff; }
+      .loot { --accent: #d7ff45; }
+      .jobs { --accent: #ff9d42; }
+      .veil { --accent: #c68aff; }
+      .xolio { --accent: #ffcb68; }
+
+      footer {
+        display: flex;
+        justify-content: space-between;
+        gap: 24px;
+        padding-top: 28px;
+        margin-top: 28px;
+        border-top: 1px solid var(--line);
+        color: var(--muted);
+        font: 700 .74rem/1.5 "SFMono-Regular", Consolas, monospace;
+        letter-spacing: .08em;
+        text-transform: uppercase;
+      }
+
+      @media (max-width: 900px) {
+        .card, .card:nth-child(1), .card:nth-child(2) { grid-column: span 6; }
+        .card:last-child { grid-column: span 12; }
+      }
+
+      @media (max-width: 620px) {
+        .shell { width: min(100% - 24px, 1380px); padding-top: 8px; }
+        header { align-items: flex-start; padding-top: 24px; }
+        .count { display: none; }
+        main { gap: 14px; }
+        .card, .card:nth-child(1), .card:nth-child(2), .card:last-child { grid-column: span 12; min-height: 0; }
+        .content { padding: 18px; }
+        footer { flex-direction: column; gap: 8px; }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="shell">
+      <header>
+        <div>
+          <p class="eyebrow">X1VI / Product index</p>
+          <h1>Small tools.<br /><span>Big side quests.</span></h1>
+        </div>
+        <div class="count" aria-label="Five live products">
+          <strong>05</strong>
+          <span>live builds</span>
+        </div>
+      </header>
+
+      <main aria-label="Product catalogue">
+        <a class="card skyforge" href="https://skyforge.x1vi.workers.dev/" target="_blank" rel="noopener noreferrer" aria-label="Open Skyforge in a new tab">
+          <div class="cover">
+            <span class="card-number">01</span>
+            <img src="./assets/skyforge.png" alt="Pixel art observatory scanning hashtag constellations" />
+          </div>
+          <div class="content">
+            <div>
+              <p class="card-kicker">Social utility</p>
+              <h2>Skyforge</h2>
+              <p class="description">Find the right Bluesky tags for a topic, compose your post, and review it before publishing.</p>
+            </div>
+            <span class="visit" aria-hidden="true">↗</span>
+          </div>
+        </a>
+
+        <a class="card loot" href="https://loot-games.x1vi.workers.dev/" target="_blank" rel="noopener noreferrer" aria-label="Open Loot Terminal in a new tab">
+          <div class="cover">
+            <span class="card-number">02</span>
+            <img src="./assets/loot-terminal.png" alt="Pixel art treasure vault with games and a glowing terminal" />
+          </div>
+          <div class="content">
+            <div>
+              <p class="card-kicker">Games & deals</p>
+              <h2>Loot Terminal</h2>
+              <p class="description">Track games and deals from a neon command center built for the next great find.</p>
+            </div>
+            <span class="visit" aria-hidden="true">↗</span>
+          </div>
+        </a>
+
+        <a class="card jobs" href="https://gov-jobs.x1vi.workers.dev/" target="_blank" rel="noopener noreferrer" aria-label="Open GovJobs in a new tab">
+          <div class="cover">
+            <span class="card-number">03</span>
+            <img src="./assets/gov-jobs.png" alt="Pixel art civic building at sunrise with job notices and calendar" />
+          </div>
+          <div class="content">
+            <div>
+              <p class="card-kicker">Career tracker</p>
+              <h2>GovJobs</h2>
+              <p class="description">Browse Indian government openings and deadlines in one focused, visual dashboard.</p>
+            </div>
+            <span class="visit" aria-hidden="true">↗</span>
+          </div>
+        </a>
+
+        <a class="card veil" href="https://ai-artist-protection.pages.dev/" target="_blank" rel="noopener noreferrer" aria-label="Open Veil in a new tab">
+          <div class="cover">
+            <span class="card-number">04</span>
+            <img src="./assets/veil.png" alt="Pixel art painting protected by a shimmering digital shield" />
+          </div>
+          <div class="content">
+            <div>
+              <p class="card-kicker">Artist protection</p>
+              <h2>Veil</h2>
+              <p class="description">Create a subtle image-protection layer locally in your browser, without uploading your work.</p>
+            </div>
+            <span class="visit" aria-hidden="true">↗</span>
+          </div>
+        </a>
+
+        <a class="card xolio" href="https://dawn-feather-a14c.x1vi.workers.dev/" target="_blank" rel="noopener noreferrer" aria-label="Open Xolio in a new tab">
+          <div class="cover">
+            <span class="card-number">05</span>
+            <img src="./assets/xolio.png" alt="Pixel art open book glowing beneath a reading lamp" />
+          </div>
+          <div class="content">
+            <div>
+              <p class="card-kicker">Local reader</p>
+              <h2>Xolio</h2>
+              <p class="description">Read EPUB, PDF, and Markdown files in a calm, local-first personal library.</p>
+            </div>
+            <span class="visit" aria-hidden="true">↗</span>
+          </div>
+        </a>
+      </main>
+
+      <footer>
+        <span>Independent software / 2026</span>
+        <span>Choose a card to launch</span>
+      </footer>
+    </div>
+  </body>
+</html>
