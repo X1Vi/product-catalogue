@@ -1,6 +1,6 @@
 # X1VI Product Catalogue
 
-A static, single-page product catalogue with five generated pixel-art covers.
+A static, single-page product catalogue with five code-drawn pixel-art covers.
 
 ## Deploy as a Cloudflare Worker
 
